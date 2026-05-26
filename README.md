@@ -2,6 +2,8 @@
 
 A tiny offline-first PWA for tracking your **Panini FIFA World Cup 2026** sticker collection — built so my son and I could walk into a swap event and know, in under a second, whether the sticker someone is offering us is a `NEED`, a `HAVE`, or a `DUPE`.
 
+**Try it now:** [**sticker-swap-phi.vercel.app**](https://sticker-swap-phi.vercel.app/) — open on your phone, then **Share → Add to Home Screen**. Works offline after the first load. No account, no signup, your collection stays on your phone.
+
 Two things you might want from this repo:
 
 1. **A clean machine-readable catalog of every WC 2026 Panini sticker** — 1,034 entries with `code`, `name`, and `team`. Drop it in your own tracker, spreadsheet, or bot. → [`data/raw/panini-wc-2026-catalog.json`](data/raw/panini-wc-2026-catalog.json)
@@ -45,7 +47,19 @@ A PWA optimised for one thing: **standing at a swap table, getting an instant an
 - **First-inventory mode.** Tap through every sticker once to seed `HAVE` / `NEED` / `DUPE`. After that, the app switches to lookup mode.
 - **Designed for a phone.** Big buttons. One-handed. Card-at-a-time layout. The home-screen icon is a FIFA-red `00` block with a chrome bisecting line — references the Panini wrapper without infringing anyone's marks.
 
+### Install (hosted)
+
+The fastest path:
+
+1. Open [**sticker-swap-phi.vercel.app**](https://sticker-swap-phi.vercel.app/) on your phone (Safari on iOS, Chrome on Android).
+2. **Share → Add to Home Screen.**
+3. Launch from the new icon — full-screen, no browser chrome.
+
+Once the home-screen launch has run once, the service worker has precached the app shell and the bundled catalog. Airplane mode is fine after that.
+
 ### Install from source
+
+If you'd rather run your own build:
 
 ```sh
 npm install
@@ -53,13 +67,7 @@ npm run build
 npm run preview -- --host
 ```
 
-`preview --host` exposes the production build over your LAN at port `4173`. On your phone:
-
-1. Open `http://<your-laptop-ip>:4173/` in Safari (iOS) or Chrome (Android).
-2. Share → **Add to Home Screen**.
-3. Launch from the new icon — full-screen, no browser chrome.
-
-Once the home-screen launch has run once, the service worker has precached the app shell and the bundled catalog. Airplane mode is fine after that.
+`preview --host` exposes the production build over your LAN at port `4173`. Open `http://<your-laptop-ip>:4173/` on your phone and follow steps 2-3 above.
 
 For development:
 

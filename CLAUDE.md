@@ -1,6 +1,6 @@
 # Sticker Swap App
 
-> Read [`../DOCTRINE.md`](../DOCTRINE.md) first. Domain rules below build on it.
+> Read [`../../DOCTRINE.md`](../../DOCTRINE.md) first. Domain rules below build on it. Portfolio inheritance question (whether to also chain through [`../CLAUDE.md`](../CLAUDE.md), the public-products cross-product contract) is open — flagged at folder-move time, decide at next session.
 
 ## What this is
 A PWA for tracking Daniel & son's FIFA World Cup 2026 Panini sticker collection. The killer use case is **instant offline lookup at swap events**: type or scan a sticker code, get an immediate ✅ HAVE / ❌ NEED / 🔄 DUPE answer.

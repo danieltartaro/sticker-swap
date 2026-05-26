@@ -1,0 +1,42 @@
+:root {
+  /* FIFA 26 brand palette */
+  --color-fifa-red:     #D7232A;
+  --color-fifa-violet:  #9B5BD2;
+  --color-fifa-blue:    #1E40C8;
+  --color-fifa-green:   #2BAA4F;
+  --color-fifa-orange:  #E55B2A;
+  --color-fifa-teal:    #1B8C9E;
+  --color-fifa-yellow:  #FFD600;
+  --color-fifa-forest:  #1A5C3D;
+
+  /* Operational surface */
+  --color-bg-app:       #0F172A;
+  --color-bg-card:      #1E293B;
+  --color-bg-pill:      #0F172A;
+  --color-text-primary: #F8FAFC;
+  --color-text-muted:   #94A3B8;
+  --color-text-dim:     #475569;
+
+  /* Chrome */
+  --color-chrome-mid:   #9CA3AF;
+  --color-chrome-high:  #E5E7EB;
+  --gradient-chrome: linear-gradient(180deg, #9CA3AF 0%, #E5E7EB 50%, #9CA3AF 100%);
+  --gradient-chrome-edge: linear-gradient(135deg, #9CA3AF 0%, #E5E7EB 25%, #9CA3AF 50%, #E5E7EB 75%, #9CA3AF 100%);
+
+  /* Per-type pill colors */
+  --type-player-border:  #1E40C8;
+  --type-player-text:    #6088E5;
+  --type-badge-border:   #FFD600;
+  --type-badge-text:     #FFD600;
+  --type-legend-border:  #9B5BD2;
+  --type-legend-text:    #B585E0;
+  --type-special-border: #1B8C9E;
+  --type-special-text:   #5BAFBD;
+  --type-group-border:   #D7232A;
+  --type-group-text:     #E55B5B;
+
+  /* Typography */
+  --font-display: 'Archivo Black', system-ui, sans-serif;
+  --font-mono:    ui-monospace, 'SF Mono', 'Cascadia Mono', monospace;
+  --font-sans:    -apple-system, BlinkMacSystemFont, 'SF Pro', system-ui, sans-serif;
+}

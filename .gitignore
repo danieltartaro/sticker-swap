@@ -1,0 +1,22 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.log
+scratch/
+
+# Per-machine Claude Code settings (project-level .claude/settings.json may ship if added)
+.claude/settings.local.json
+
+# TS incremental build cache
+*.tsbuildinfo
+
+# Stray Finder duplicates and accidental compile outputs of vite.config.ts
+*\ 2.ts
+vite.config.js
+vite.config.d.ts
+

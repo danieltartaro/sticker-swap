@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!--
+    PWA icon — spec 05 lock 3 (session 3, 2026-05-26).
+    Brand surface: fifa-red bg, white Archivo Black "00", chrome gradient midline.
+    "00" path data extracted from @fontsource/archivo-black/files/archivo-black-latin-400-normal.woff2
+    via a one-shot opentype.js + wawoff2 script (NOT added to package.json).
+    Glyph: unitsPerEm=1000, advanceWidth=667, bbox x[41,626] y[-700,12].
+    Transform centers two glyphs (using natural advance width 667) at canvas (256,256),
+    target width 380px (74% of canvas, inside the 80% maskable safe zone).
+    Z-order: red bg → chrome line → "00" on top, so the chrome line passes BEHIND
+    the digits AND shows through their counters (FIFA emblem mirror motif).
+  -->
+  <defs>
+    <!-- gradientUnits="userSpaceOnUse" with explicit canvas coords is portable
+         across rasterizers (sharp/libvips, ImageMagick, Chrome, Safari).
+         The default objectBoundingBox unit gave undefined behavior on a <line>
+         (the bounding box of a zero-height line is degenerate), causing the
+         gradient to only render at endpoints in librsvg-backed renderers
+         (which is what @vite-pwa/assets-generator uses internally). -->
+    <linearGradient id="chrome" gradientUnits="userSpaceOnUse"
+                    x1="0" y1="0" x2="512" y2="0">
+      <stop offset="0"   stop-color="#9CA3AF"/>
+      <stop offset="0.5" stop-color="#E5E7EB"/>
+      <stop offset="1"   stop-color="#9CA3AF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- fifa-red background -->
+  <rect width="512" height="512" fill="#D7232A"/>
+
+  <!-- Chrome midline: 8px tall rect centered at y=256, full canvas width.
+       Was originally a <line stroke="url(#chrome)" stroke-width="8"/> but
+       librsvg renders stroke-gradients on <line> elements inconsistently
+       (only the endpoints filled, middle invisible). A <rect fill="...">
+       is well-defined behavior in every rasterizer.
+
+       Height/weight chosen per §4.2: 2px at icon scale was sub-pixel during
+       iOS home-screen rasterization (60→180px physical) and invisible. 8px
+       source ≈ 2.8px at apple-touch-icon-180 scale — visible but still reads
+       as a thin chrome bisector. The §4.2 "multi-scale identity atom" learning
+       revised here: same gradient identity at every scale, scale-appropriate
+       weight. In-app <ChromeDivider> stays at 2px. -->
+  <rect x="0" y="252" width="512" height="8" fill="url(#chrome)"/>
+
+  <!-- "00" in Archivo Black, white #F8FAFC, on top so the chrome line is BEHIND it
+       and shows through each glyph's counter (the hollow center of the 0). -->
+  <g fill="#F8FAFC" transform="translate(53.56, 360.41) scale(0.30351)">
+    <path d="M334-700Q495-700 560.500-608.500Q626-517 626-344L626-344Q626-171 560.500-79.500Q495 12 334 12L334 12Q172 12 106.500-79.500Q41-171 41-344L41-344Q41-517 106.500-608.500Q172-700 334-700L334-700ZM334-565Q282-565 260-525Q238-485 238-394L238-394L238-295Q238-203 260-163Q282-123 334-123L334-123Q386-123 407-163Q428-203 428-295L428-295L428-394Q428-486 407-525.500Q386-565 334-565L334-565Z"/>
+    <path transform="translate(667, 0)" d="M334-700Q495-700 560.500-608.500Q626-517 626-344L626-344Q626-171 560.500-79.500Q495 12 334 12L334 12Q172 12 106.500-79.500Q41-171 41-344L41-344Q41-517 106.500-608.500Q172-700 334-700L334-700ZM334-565Q282-565 260-525Q238-485 238-394L238-394L238-295Q238-203 260-163Q282-123 334-123L334-123Q386-123 407-163Q428-203 428-295L428-295L428-394Q428-486 407-525.500Q386-565 334-565L334-565Z"/>
+  </g>
+</svg>

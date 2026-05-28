@@ -36,3 +36,8 @@ class StickerSwapDB extends Dexie {
 }
 
 export const db = new StickerSwapDB();
+
+export async function resetInventory(): Promise<void> {
+  await db.stickers.clear();
+  await db.stickers.bulkAdd(transformCatalog(rawCatalog));
+}

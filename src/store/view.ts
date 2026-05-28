@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type View = 'first-inventory' | 'lookup';
+export type View = 'welcome' | 'first-inventory' | 'country-browse';
 
 type ViewState = {
   view: View | null;

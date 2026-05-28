@@ -3,13 +3,9 @@
 > Read [`../../DOCTRINE.md`](../../DOCTRINE.md) first. Domain rules below build on it. Portfolio inheritance question (whether to also chain through [`../CLAUDE.md`](../CLAUDE.md), the public-products cross-product contract) is open — flagged at folder-move time, decide at next session.
 
 ## What this is
-A PWA for tracking Daniel & son's FIFA World Cup 2026 Panini sticker collection. The killer use case is **instant offline lookup at swap events**: type or scan a sticker code, get an immediate ✅ HAVE / ❌ NEED / 🔄 DUPE answer.
+A PWA for tracking Daniel & son's FIFA World Cup 2026 Panini sticker collection. The killer use case is **browse-by-country with tap-to-mark at swap events**: pick a country in the picker, see what you're missing in a 2-column grid, tap "Got it" to mark a sticker as Have. Fully offline. A guided first-inventory pass (Need / Have, with arrow-rewind) seeds the collection before swap day.
 
-## Performance contract (non-negotiable)
-Lookup latency target: **<50ms from keypress to result, fully offline**. This drives every architecture decision:
-- Local-first storage (IndexedDB via Dexie). No network round-trips on the hot path.
-- Sticker code is the primary index. Lookups are O(1) hash, not array scans.
-- App shell cached via service worker. Cold launch from home screen feels instant.
+> Killer-feature reversal note: the original killer use case was type-a-code Lookup with a `<50ms` keypress→result contract. Retired 2026-05-28 per doctrine §4.12; see [`specs/07-killer-feature-reversal.md`](specs/07-killer-feature-reversal.md) and `journal/log.md` session 6.
 
 ## Stack
 - Vite + React 18 + TypeScript
@@ -28,7 +24,7 @@ type Sticker = {
   team?: string;          // e.g. "Brazil"; undefined for non-team stickers (specials, legends)
   name?: string;          // descriptive label: player name, "Panini Logo", "Brazil 1994", "Emblem", "Team Photo"
   isShiny?: boolean;
-  owned: number;          // 0 = need, 1 = have, 2+ = dupes (tradeable)
+  owned: number;          // 0 = need, 1 = have. >=2 unused — dupe concept retired in Module 7 per §4.12.
   reviewed: boolean;      // false until decided in the first-inventory pass
   sortIndex: number;      // array index from canonical catalog; preserves album order
 };
@@ -40,11 +36,11 @@ type Sticker = {
 
 ## Folder map
 - `src/data/` — Dexie schema, seed loader, sticker types
-- `src/features/lookup/` — swap-event lookup screen (killer feature)
-- `src/features/inventory/` — full collection browser, mark-as-owned, first-inventory mode
-- `src/features/trade/` — what to trade / what to find at a swap
-- `src/components/` — shared UI primitives
+- `src/features/country-browse/` — country picker + missing-sticker grid (killer feature)
+- `src/features/inventory/` — Welcome screen + guided first-inventory pass (Need / Have, arrow-rewind, Reset)
+- `src/components/` — shared UI primitives (Card, GridCard, ActionButton, ConfirmDialog, ScreenLayout, etc.)
 - `specs/` — feature briefs written outside Claude Code, used as starting prompts for plan-mode sessions. Read the relevant `specs/NN-*.md` before planning. Numbered in build order.
+- `mocks/` — visual source-of-truth PNGs (`07-*.png`) and `.reference.tsx` files captured 2026-05-28. PNG wins when spec prose disagrees. `.reference.tsx` files are not imported by production; they exist as copy-paste sources to defeat Tailwind-class drift during visual fidelity work. macOS Screenshot filenames embed a NARROW NO-BREAK SPACE (U+202F) between "Screenshot" and the date — always quote / escape in any scripted file handling.
 - `public/` — PWA icon set + source SVG. Regenerate with `npx @vite-pwa/assets-generator --preset minimal-2023 public/icon-source.svg` after editing `icon-source.svg`. Output files (`pwa-*.png`, `maskable-icon-512x512.png`, `apple-touch-icon-180x180.png`, `favicon.ico`) are committed.
 
 ## Conventions
@@ -88,7 +84,7 @@ This project is a personal toy / learning artifact, slated for open-source. Not 
 - **§4.2 probe runtime, §4.3 no assumed state** — already burned us once (assumed 670 stickers; reality is 1,034). Always verify counts and external state empirically before encoding.
 - **§4.10 universal hygiene** — Brasil-with-S is muted in data files (source is English, preserve as ingested); applies in Daniel-authored prose. **Emoji rule explicitly overridden for this project (Daniel call, 2026-05-26)** — decorative emojis allowed in docs (MASTERCLASS.md, specs/*.md, etc.) since this is a personal/learning artifact. No-secrets and prose-where-prose-fits still apply.
 - **§4.11 acceptance ≠ fault-finding** — when Daniel reports "works on my phone," light verification, not an audit.
-- **§4.12 prior calls stand** — every decision in `specs/*.md` and `journal/log.md` is settled until explicitly revisited. New contradicting evidence triggers "this may invalidate decision X — should we revisit?", not silent re-framing.
+- **§4.12 prior calls stand** — every decision in `specs/*.md` and `journal/log.md` is settled until explicitly revisited. New contradicting evidence triggers "this may invalidate decision X — should we revisit?", not silent re-framing. *Example:* Module 7 (2026-05-28) retired the entire Lookup feature under §4.12 — spec `specs/07-killer-feature-reversal.md` + journal session 6 carry the full reasoning and the locked decisions.
 - **§4.14 optimization function probe** — sticker-swap's optimization function is *use it at a swap event today + give Reddit collectors a clean JSON*. Architecture / vendor calls are evaluated against that, not against generic best practices.
 - **§5 cost discipline** — Claude Code work defaults to Workhorse-tier. Premium only for architecture decisions. Catalog JSON is Fat Data (compounding asset, ships bundled).
 - **§7 session ritual** — open / close triggers above.
